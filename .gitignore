@@ -1,2 +1,3 @@
-./.idea
-./infra/.env
+
+/infra/.env
+/.idea
