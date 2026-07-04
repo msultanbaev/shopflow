@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shopflow_users
+    username: shopflow
+    password: shopflow123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: users
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8181/realms/shopflow
+
+  flyway:
+    enabled: true
+    schemas: users
+    locations: classpath:db/migration
+    default-schema: users
+
+keycloak:
+  server-url: http://localhost:8181
+  realm: shopflow
+  client-id: shopflow-app
+  client-secret: VI0HiTkDrlXLSbTGGGNqgDT0tkTAB6g4
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+server:
+  port: 8081

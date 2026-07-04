@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: product-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shopflow_products
+    username: shopflow
+    password: shopflow123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8181/realms/shopflow
+  flyway:
+    enabled: true
+    schemas: public
+    locations: classpath:db/migration
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+server:
+  port: 8082
+
+aws:
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  region: ${AWS_REGION:eu-north-1}
+  s3:
+    bucket: ${AWS_S3_BUCKET}

@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: api-gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8181/realms/shopflow
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: user-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/v1/users/**
+
+            - id: product-service
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/v1/products/**
+
+            - id: order-service
+              uri: http://localhost:8083
+              predicates:
+                - Path=/api/v1/orders/**
+
+            - id: inventory-service
+              uri: http://localhost:8084
+              predicates:
+                - Path=/api/v1/inventory/**
+
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowed-origins: "*"
+                allowed-methods: "*"
+                allowed-headers: "*"
+                allow-credentials: false
+
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+server:
+  port: 8080
