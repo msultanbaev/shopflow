@@ -1,4 +1,4 @@
-package com.shopflow.order_service.config;
+package com.shopflow.payment_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.shopflow.order_service.dto;
+package com.shopflow.payment_service.dto;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,12 +1,11 @@
 server:
-  port: 8083
+  port: 8085
 
 spring:
   application:
-    name: order-service
-
+    name: payment-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/shopflow_orders
+    url: jdbc:postgresql://localhost:5432/shopflow_payments
     username: shopflow
     password: shopflow123
     driver-class-name: org.postgresql.Driver
@@ -15,7 +14,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        default_schema: orders
+        default_schema: payments
     show-sql: true
   security:
     oauth2:
@@ -24,15 +23,15 @@ spring:
           issuer-uri: http://localhost:8181/realms/shopflow
   flyway:
     enabled: true
-    schemas: orders
+    schemas: payments
     locations: classpath:db/migration
   kafka:
     bootstrap-servers: localhost:9094
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
-      group-id: order-service
+      group-id: payment-service
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

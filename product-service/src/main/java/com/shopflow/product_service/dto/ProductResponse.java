@@ -19,7 +19,6 @@ public class ProductResponse {
     private CategoryResponse category;
     private UUID sellerId;
     private String imageUrl;
-    private Integer stock;
     private String status;
     private LocalDateTime createdAt;
 
@@ -31,9 +30,7 @@ public class ProductResponse {
                 .price(product.getPrice())
                 .category(CategoryResponse.from(product.getCategory()))
                 .sellerId(product.getSellerId())
-                .imageUrl(product.getImageUrl())
-                .stock(product.getStock())
-                .status(product.getStatus().name())
+                .imageUrl(product.getImageUrl()).status(product.getStatus().name())
                 .createdAt(product.getCreatedAt())
                 .build();
     }

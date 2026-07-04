@@ -3,6 +3,7 @@ package com.shopflow.inventory_service.kafka;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shopflow.inventory_service.event.OrderCancelledEvent;
 import com.shopflow.inventory_service.event.OrderCreatedEvent;
 import com.shopflow.inventory_service.service.InventoryService;
 import lombok.RequiredArgsConstructor;
@@ -40,13 +41,14 @@ public class InventoryKafkaConsumer {
     public void handleOrderCancelled(ConsumerRecord<String, String> record) {
         try {
             UUID eventId = UUID.fromString(record.key());
-            UUID orderId = UUID.fromString(record.value());
+            OrderCancelledEvent event = objectMapper.readValue(
+                    record.value(), OrderCancelledEvent.class);
 
-            log.info("Received order.cancelled event for order: {}", orderId);
-            inventoryService.releaseStock(orderId, eventId);
+            log.info("Received order.cancelled for order: {}", event.getOrderId());
+            inventoryService.releaseStock(event.getOrderId(), eventId, event.getItems());
 
         } catch (Exception e) {
-            log.error("Failed to process order.cancelled event: {}", e.getMessage(), e);
+            log.error("Failed to process order.cancelled: {}", e.getMessage(), e);
         }
     }
 }

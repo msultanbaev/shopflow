@@ -40,7 +40,6 @@ public class ProductService {
                 .category(category)
                 .sellerId(sellerId)
                 .imageUrl(request.getImageUrl())
-                .stock(request.getStock())
                 .status(Product.Status.ACTIVE)
                 .build();
 
@@ -100,7 +99,6 @@ public class ProductService {
         product.setPrice(request.getPrice());
         product.setCategory(category);
         product.setImageUrl(request.getImageUrl());
-        product.setStock(request.getStock());
 
         log.info("Product updated: {}", product.getId());
         return ProductResponse.from(product);

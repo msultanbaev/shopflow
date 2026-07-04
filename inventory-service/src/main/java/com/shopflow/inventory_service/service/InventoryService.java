@@ -5,6 +5,7 @@ import com.shopflow.inventory_service.dto.StockRequest;
 import com.shopflow.inventory_service.dto.StockResponse;
 import com.shopflow.inventory_service.entity.ProcessedEvent;
 import com.shopflow.inventory_service.entity.Stock;
+import com.shopflow.inventory_service.event.OrderCancelledEvent;
 import com.shopflow.inventory_service.event.OrderCreatedEvent;
 import com.shopflow.inventory_service.repository.ProcessedEventRepository;
 import com.shopflow.inventory_service.repository.StockRepository;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -68,16 +70,28 @@ public class InventoryService {
     }
 
     @Transactional
-    public void releaseStock(UUID orderId, UUID eventId) {
+    public void releaseStock(UUID orderId, UUID eventId,
+                             List<OrderCancelledEvent.OrderItem> items) {
         if (processedEventRepository.existsByEventId(eventId)) {
             log.warn("Event already processed: {}", eventId);
             return;
         }
 
-        log.info("Releasing stock for order: {}", orderId);
+        for (OrderCancelledEvent.OrderItem item : items) {
+            stockRepository.findByProductIdWithLock(item.getProductId())
+                    .ifPresent(stock -> {
+                        stock.release(item.getQuantity());
+                        stockRepository.save(stock);
+                        log.info("Released {} units for product: {}",
+                                item.getQuantity(), item.getProductId());
+                    });
+        }
+
         processedEventRepository.save(ProcessedEvent.builder()
                 .eventId(eventId)
                 .build());
+
+        log.info("Stock released for order: {}", orderId);
     }
 
     @Transactional(readOnly = true)

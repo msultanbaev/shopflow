@@ -13,8 +13,6 @@ public class OrderItemRequest {
     @NotNull
     private UUID productId;
 
-    private BigDecimal price;
-
     @NotNull
     @Min(1)
     private Integer quantity;

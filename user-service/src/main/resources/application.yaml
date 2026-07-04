@@ -29,7 +29,7 @@ keycloak:
   server-url: http://localhost:8181
   realm: shopflow
   client-id: shopflow-app
-  client-secret: VI0HiTkDrlXLSbTGGGNqgDT0tkTAB6g4
+  client-secret: 4N3zvfKjJU7Kkw0Q6xF8O2Vul4ylP1VM
 
 logging:
   level:

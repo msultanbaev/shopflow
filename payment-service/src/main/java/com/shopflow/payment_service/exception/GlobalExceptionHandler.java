@@ -1,6 +1,6 @@
-package com.shopflow.order_service.exception;
+package com.shopflow.payment_service.exception;
 
-import com.shopflow.order_service.dto.ErrorResponse;
+import com.shopflow.payment_service.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

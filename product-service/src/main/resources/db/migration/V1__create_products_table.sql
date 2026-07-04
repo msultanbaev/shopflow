@@ -15,7 +15,6 @@ CREATE TABLE products.products (
                                    category_id   UUID NOT NULL REFERENCES products.categories(id),
                                    seller_id     UUID NOT NULL,
                                    image_url     VARCHAR(500),
-                                   stock         INTEGER NOT NULL DEFAULT 0,
                                    status        VARCHAR(50) NOT NULL DEFAULT 'ACTIVE',
                                    created_at    TIMESTAMP NOT NULL DEFAULT now(),
                                    updated_at    TIMESTAMP NOT NULL DEFAULT now()

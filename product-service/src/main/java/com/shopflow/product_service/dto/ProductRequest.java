@@ -26,7 +26,4 @@ public class ProductRequest {
 
     private String imageUrl;
 
-    @NotNull
-    @Min(0)
-    private Integer stock;
 }
